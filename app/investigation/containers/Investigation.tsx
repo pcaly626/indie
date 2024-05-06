@@ -5,14 +5,14 @@ import styles from "./Investigation.module.css";
 import { Table } from "../../ui/tables/Table";
 
 export const Investigation = () => {
-    let fields = {
+    let records = [{
       name: 'Test',
       location: 'test',
       origin: 'tesT'
-    }
+    }]
     return (
     <div>
-      <Table fields={fields}/>
+      <Table records={records}/>
     </div>
   )
 }
