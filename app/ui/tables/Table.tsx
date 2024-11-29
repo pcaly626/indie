@@ -1,6 +1,12 @@
 'use client';
 
-export const Table = (props : any) => {
+
+interface TableProps {
+    name :string;
+    records: any;
+}
+
+export const Table = (props : TableProps) => {
     let tableNames = Object.keys(props.records[0]);
    
     return (

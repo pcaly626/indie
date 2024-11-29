@@ -1,7 +1,7 @@
 import { createAppSlice } from "@/lib/createAppSlice";
 import type { AppThunk } from "@/lib/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { fetchAddCheckin } from "./checkInAPI";
+import { fetchAddCheckin, fetchGetCheckin } from "./checkInAPI";
 
 export interface PayLoad {
     email: string;
@@ -38,11 +38,30 @@ export const checkInSlice = createAppSlice({
             state.Interval = action.payload.Interval;
         },
         ),
+    getCheckIns: create.asyncThunk(
+        async () => {
+            const response = await fetchGetCheckin();
+            // The value we return becomes the `fulfilled` action payload
+            return response;
+        },
+        {
+        pending: (state) => {
+            state.status = "loading";
+        },
+        fulfilled: (state, action) => {
+            state.status = "idle";
+            state.email += action.payload;
+        },
+        rejected: (state) => {
+            state.status = "failed";
+        },
+        },
+    ),
     addCheckIn: create.asyncThunk(
       async (payload: PayLoad) => {
         const response = await fetchAddCheckin(payload.email, payload.address, payload.Interval);
         // The value we return becomes the `fulfilled` action payload
-        return response.data;
+        return response;
       },
       {
         pending: (state) => {
@@ -61,4 +80,4 @@ export const checkInSlice = createAppSlice({
 });
 
 // Action creators are generated for each case reducer function.
-export const { addCheckIn } = checkInSlice.actions;
+export const { addCheckIn, getCheckIns } = checkInSlice.actions;

@@ -25,8 +25,8 @@ export const Input = (props : Input) => {
             return (
                 <>
                     <label htmlFor={props.label}>{props.label}</label>
-                    <select name={props.label} onChange={props.change}>
-                        {props.options?.map( (option : Options) => <option key={option.value} value={option.value}>{option.name}</option>)}
+                    <select name={props.label} onChange={(e) => props.change(e)}>
+                        {props.options?.map( (option : Options) => <option key={option.name} value={option.value}>{option.name}</option>)}
                     </select>
                 </>
             )
@@ -34,7 +34,14 @@ export const Input = (props : Input) => {
             return (
                 <>
                     <label htmlFor={props.label}>{props.label}</label>
-                    <input key={props.label} type={props.type} className={props.css} value={props.value} placeholder={props.placeHolder} onChange={props.change}/>
+                    <input
+                        name={props.label} 
+                        key={props.label} 
+                        type={props.type} 
+                        className={props.css} 
+                        value={props.value} 
+                        placeholder={props.placeHolder} 
+                        onChange={(e) => props.change(e)}/>
                 </>
                 )
         default:
